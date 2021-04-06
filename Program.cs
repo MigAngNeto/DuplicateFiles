@@ -8,13 +8,31 @@ namespace DuplicateFiles
     {
         static void Main(string[] args)
         {
-            //get the path
-            Console.WriteLine("Please introduce the path for search for duplicates");
-            string pathFile = Console.ReadLine();
+            string pathFile =null;
+
+            try
+            {
+
+                //get the path
+                Console.WriteLine("Please introduce the path for search for duplicates \n");
+                pathFile = Console.ReadLine();
+
+		// Search if the param pathFile is a valid path in the system
+                Directory.SetCurrentDirectory(pathFile);
+            }
+            catch (DirectoryNotFoundException dirEx)
+            {
+                // Let the user know that the directory did not exist.
+                Console.WriteLine("Directory not found: " + dirEx.Message);
+                Environment.Exit(0);
+            }
+
 
             //Get files on the path
+
             String[] filePath = Directory.GetFiles(@pathFile);
-            Debug.Print(filePath.Length.ToString());
+           
+            
             
             
             // String b is a aux variable since with the array sort we are sorting the items if the string of the current element in b is iqual to the next element in b then the item is repeated
@@ -72,6 +90,7 @@ namespace DuplicateFiles
             catch (Exception wqe)
             {
                 Debug.Print(wqe.Message);
+                Environment.Exit(0);
             }
         }
     }
